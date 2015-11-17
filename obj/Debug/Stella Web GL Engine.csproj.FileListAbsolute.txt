@@ -1,0 +1,32 @@
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\roslyn\csc.exe
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\roslyn\Microsoft.CodeAnalysis.dll
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\roslyn\Microsoft.CSharp.Core.targets
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\roslyn\Microsoft.VisualBasic.Core.targets
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\roslyn\System.Collections.Immutable.dll
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\roslyn\System.Reflection.Metadata.dll
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\roslyn\vbc.exe
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\roslyn\VBCSCompiler.exe
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\roslyn\VBCSCompiler.exe.config
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\Microsoft.ApplicationInsights.Extensions.Intercept_x86.dll
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\Microsoft.ApplicationInsights.Extensions.Intercept_x64.dll
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\Stella Web GL Engine.dll.config
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\Stella Web GL Engine.dll
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\Stella Web GL Engine.pdb
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\Microsoft.ApplicationInsights.dll
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\Microsoft.ApplicationInsights.Extensibility.DependencyCollector.dll
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.dll
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\Microsoft.ApplicationInsights.Extensibility.Web.dll
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\Microsoft.ApplicationInsights.Web.TelemetryChannel.dll
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\Microsoft.Diagnostics.Instrumentation.Extensions.Intercept.dll
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\Microsoft.ApplicationInsights.xml
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\Microsoft.ApplicationInsights.Extensibility.DependencyCollector.xml
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\Microsoft.ApplicationInsights.Extensibility.Web.xml
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\Microsoft.ApplicationInsights.Web.TelemetryChannel.xml
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\obj\Debug\Stella Web GL Engine.csprojResolveAssemblyReference.cache
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\obj\Debug\Stella Web GL Engine.dll
+G:\Game Dev\Stella Web GL Engine\Stella Web GL Engine\obj\Debug\Stella Web GL Engine.pdb
