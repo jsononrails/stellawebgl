@@ -29,8 +29,8 @@ Game.prototype.initialize = function() {
 	
 	// Step B: create the shader
 	this.mConstantColorShader = new SimpleShader(
-	    "/src/GLSLShaders/SimpleVS.glsl",    // Path to Vertexshader
-        "/src/GLSLShaders/SimpleFS.glsl"     // Path to FragmentShader
+	    "src/GLSLShaders/SimpleVS.glsl",    // Path to Vertexshader
+        "src/GLSLShaders/SimpleFS.glsl"     // Path to FragmentShader
 	);
 
     // Step C: Create the renderable objects:
@@ -59,18 +59,18 @@ Game.prototype.update = function() {
 
     // Step A: move the white square
     var whiteXform = this.mWhiteSq.getXform();
-    var deltaX = 0.05;
+    var delta = 0.05;
     if(whiteXform.getXPos() > 30) // this is right-bound of the window
-        whiteXForm.setPosition(10, 60);
+        whiteXform.setPosition(10, 60);
 
-    whiteXform.incXPosBy(deltaX);
+    whiteXform.incXPosBy(delta);
     whiteXform.incRotationByDegree(1);
 
     // Step B: pulse the red square
     var redXform = this.mRedSq.getXform();
     if(redXform.getWidth() > 5)
         redXform.setSize(2, 2);
-    redXform.incSizeby(0.05);
+    redXform.incSizeby(delta);
 };
 
 // This is the draw function, make sure to setup proper drawing environment,

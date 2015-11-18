@@ -45,6 +45,20 @@ Transform.prototype.setRotationInDegree = function(rotationInDegree) {
 };
 Transform.prototype.getRotationInDegree = function() { return this.mRotationInRad * 180 / Math.PI; };
 
+Transform.prototype.incXPosBy = function (delta) {
+    var newX = this.getXPos() + delta;
+    this.setXPos(newX);
+};
+
+Transform.prototype.incRotationByDegree = function (degree) {
+    var newDegree = this.getRotationInDegree() + degree;
+    this.setRotationInDegree(newDegree);
+};
+
+Transform.prototype.incSizeby = function (delta) {
+    this.setSize((this.getWidth() + delta), (this.getHeight() + delta));
+};
+
 Transform.prototype.getXform = function() {
 	// Creates a blank identity matrix
 	var matrix = mat4.create();

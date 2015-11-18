@@ -16,7 +16,7 @@ function Renderable(shader) {
 	this.mXform = new Transform();	// transform operator for the object
 }
 
-Renderable.prototype.draw = function(vpMatrix) {
+Renderable.prototype.draw = function (vpMatrix) {
 	var gl = gEngine.Core.getGL();
 	this.mShader.activateShader(this.mColor, vpMatrix);	// always activate the shader first
 	this.mShader.loadObjectTransform(this.mXform.getXform());
