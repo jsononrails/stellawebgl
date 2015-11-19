@@ -11,7 +11,7 @@ function Game(htmlCanvasID) {
 	this.mCamera = null;
 	
 	// Initialize the webGL context
-	gEngine.Core.initializeWebGL(htmlCanvasID);
+	gEngine.Core.initializeEngineCore(htmlCanvasID);
 	
 	// Initialize the game
 	this.initialize();
@@ -60,6 +60,7 @@ Game.prototype.update = function() {
     // Step A: move the white square
     var whiteXform = this.mWhiteSq.getXform();
     var delta = 0.05;
+	
     if(whiteXform.getXPos() > 30) // this is right-bound of the window
         whiteXform.setPosition(10, 60);
 
@@ -69,7 +70,8 @@ Game.prototype.update = function() {
     // Step B: pulse the red square
     var redXform = this.mRedSq.getXform();
     if(redXform.getWidth() > 5)
-        redXform.setSize(2, 2);
+		redXform.setSize(2, 2);
+		
     redXform.incSizeby(delta);
 };
 

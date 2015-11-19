@@ -44,7 +44,8 @@ var _runLoop = function() {
 		// Setp C: update the game the appropriate number of times
 		// 		   Update only ever Milliseconds per frame.
 		//		   If lag larger than update frames, update until caught up
-		while((mLagTime >= kMPF) && mIsLoopRunning) {
+		while ((mLagTime >= kMPF) && mIsLoopRunning) {
+		    gEngine.Input.update();
 			this.update();		// call Game.update();
 			mLagTime -= kMPF;
 		}
