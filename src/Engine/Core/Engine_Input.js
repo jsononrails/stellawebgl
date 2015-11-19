@@ -84,14 +84,14 @@ var initialize = function () {
 var update = function () {
     var i;
     for (i = 0; i < kLastKeyCode; i++) {
-        mIsKeyClicked[i] == (!mKeyPreviousState[i]) && mIsKeyPressed[i];
-        mKeyPreviousState[i] = mIsKeyPressed[i]
+        mIsKeyClicked[i] = (!mKeyPreviousState[i]) && mIsKeyPressed[i];
+        mKeyPreviousState[i] = mIsKeyPressed[i];
     }
 };
 
 // function for GameEngine programmer to test if key is presed down
 var isKeyPressed = function (keyCode) { return mIsKeyPressed[keyCode]; };
-var isKeyClicked = function (keycode) { return mIsKeyClicked[keycode]; };
+var isKeyClicked = function (keycode) { return (mIsKeyClicked[keycode]); };
 
 gEngine.Input = (function () {
     var mPublic = {
@@ -101,5 +101,6 @@ gEngine.Input = (function () {
         isKeyClicked, isKeyClicked,
         keys: kKeys
     };
+
     return mPublic;
 }());
