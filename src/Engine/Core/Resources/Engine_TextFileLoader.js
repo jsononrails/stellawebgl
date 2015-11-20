@@ -36,9 +36,35 @@ gEngine.TextFileLoader = (function () {
             req.setRequestHeader('Content-Type', 'text/xml');
 
             // left off at req.onload = function() { ... etc.
+            req.onload = function () {
+                var fileContent = null;
+                if (fileType === eTextFileType.eXMLFile) {
+                    var parser = new DOMParser();
+                    fileContent = parser.parseFromString(req.responseText, "text/xml");
+                } else {
+                    fileContent = req.responseText;
+                }
+                gEngine.ResourceMap.asynLoadCompleted(fileName, fileContent);
+
+                if ((callbackFunction !== null) && (callbackFunction !== undefined))
+                    callbackFunction(fileName);
+            };
+            req.send();
+        } else {
+            if ((callbackFunction !== null) && (callbackFunction !== undefined))
+                callbackFunction(fileName);
         }
     };
 
-    var mPublic = {};
+    var unloadTextFile = function (fileName) {
+        gEngine.ResourceMap.unloadAsset(fileName);
+    };
+
+    var mPublic = {
+        loadTextFile: loadTextFile,
+        unloadTextFile, unloadTextFile,
+        eTextFileType: eTextFileType
+    };
+
     return mPublic;
 }());
