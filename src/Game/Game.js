@@ -1,8 +1,4 @@
-function Game(htmlCanvasID) {
-
-    // variables of constant color shader
-    this.mConstantColorShader = null;
-
+function Game() {
     // variables for the squares
     this.mWhiteSq = null;
     this.mRedSq = null;
@@ -10,12 +6,9 @@ function Game(htmlCanvasID) {
     // The Camera to view the scene
     this.mCamera = null;
 
-    // Initialize the webGL context
-    gEngine.Core.initializeEngineCore(htmlCanvasID);
-
     // Initialize the game
     this.initialize();
-}
+};
 
 Game.prototype.initialize = function () {
     // Step A: set up the cameras
@@ -28,15 +21,12 @@ Game.prototype.initialize = function () {
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);	// set background to dark grey
 
     // Step B: create the shader
-    this.mConstantColorShader = new SimpleShader(
-	    "src/GLSLShaders/SimpleVS.glsl",    // Path to Vertexshader
-        "src/GLSLShaders/SimpleFS.glsl"     // Path to FragmentShader
-	);
+	var constColorShader = gEngine.DefaultResources.getConstColorShader();
 
     // Step C: Create the renderable objects:
-    this.mWhiteSq = new Renderable(this.mConstantColorShader);
+    this.mWhiteSq = new Renderable(constColorShader);
     this.mWhiteSq.setColor([1, 1, 1, 1]);
-    this.mRedSq = new Renderable(this.mConstantColorShader);
+    this.mRedSq = new Renderable(constColorShader);
     this.mRedSq.setColor([1, 0, 0, 1]);
 
     // Step D: Initialize the white renderable object: centered, 5x5, rotated

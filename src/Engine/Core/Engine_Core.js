@@ -33,7 +33,7 @@ gEngine.Core = (function() {
     };
 	
     // initialize all of the EngineCore components
-    var initializeEngineCore = function(htmlCanvasID) {
+    var initializeEngineCore = function(htmlCanvasID, myGame) {
 	    
         // initialize WebGL
         _initializeWebGL(htmlCanvasID);
@@ -44,7 +44,15 @@ gEngine.Core = (function() {
         // initialize input
         gEngine.Input.initialize();
 
+		// Inites DefaultResources, when done, invoke startScene(myGame).
+		gEngine.DefaultResources.initialize(function() { startScene(myGame); });
+
     };
+
+	var startScene = function(Game) {
+		Game.initialize.call(Game);		// Called this way to keep correct context
+		gEngine.GameLoop.start(Game);	// start the game loop after initialization
+	};
 
     // Clears the draw area and draws one square
     var clearCanvas = function(color) {

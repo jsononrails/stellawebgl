@@ -98,8 +98,8 @@ gEngine.Input = (function () {
     var mPublic = {
         initialize: initialize,
         update: update,
-        isKeyPressed, isKeyPressed,
-        isKeyClicked, isKeyClicked,
+        isKeyPressed: isKeyPressed,
+        isKeyClicked: isKeyClicked,
         keys: kKeys
     };
 

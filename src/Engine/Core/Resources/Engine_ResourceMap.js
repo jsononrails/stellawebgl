@@ -16,7 +16,7 @@ var MapEntry = function (rName) {
     this.mAsset = rName;
 };
 
-gEngine.Resourcemap = (function () {
+gEngine.ResourceMap = (function () {
     // resource storage
     var mResourceMap = {};
 

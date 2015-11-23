@@ -6,7 +6,11 @@
 * Version: 1.0
 *
 * $History$
-* Version 1.0 - Initial
+* Version 1.1 - Initial
+*
+* Nov 22nd 2015 - Jason McBride
+* 		Update: added is null check to draw function
+*				to avoid drawing if shader hasn't loaded yet
 *******************************************************/
 "use strict"	// Operate in Strict mode
 
@@ -17,10 +21,12 @@ function Renderable(shader) {
 }
 
 Renderable.prototype.draw = function (vpMatrix) {
-	var gl = gEngine.Core.getGL();
-	this.mShader.activateShader(this.mColor, vpMatrix);	// always activate the shader first
-	this.mShader.loadObjectTransform(this.mXform.getXform());
-	gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+	if(this.mShader !== null) { // shaders haven't loaded yet
+		var gl = gEngine.Core.getGL();
+		this.mShader.activateShader(this.mColor, vpMatrix);	// always activate the shader first
+		this.mShader.loadObjectTransform(this.mXform.getXform());
+		gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+	}
 };
 
 // Accessors

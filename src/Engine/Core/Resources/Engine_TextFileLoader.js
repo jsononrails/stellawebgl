@@ -44,7 +44,7 @@ gEngine.TextFileLoader = (function () {
                 } else {
                     fileContent = req.responseText;
                 }
-                gEngine.ResourceMap.asynLoadCompleted(fileName, fileContent);
+                gEngine.ResourceMap.asyncLoadCompleted(fileName, fileContent);
 
                 if ((callbackFunction !== null) && (callbackFunction !== undefined))
                     callbackFunction(fileName);
@@ -62,7 +62,7 @@ gEngine.TextFileLoader = (function () {
 
     var mPublic = {
         loadTextFile: loadTextFile,
-        unloadTextFile, unloadTextFile,
+        unloadTextFile: unloadTextFile,
         eTextFileType: eTextFileType
     };
 
