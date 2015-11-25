@@ -118,6 +118,11 @@
     <Content Include="server.js" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="src\.DS_Store" />
+    <Content Include="src\Assets\scene.xml" />
+    <Content Include="src\Engine\Core\Engine_Input.js" />
+    <Content Include="src\Engine\Core\Resources\Engine_ResourceMap.js" />
+    <Content Include="src\Engine\Core\Resources\Engine_TextFileLoader.js" />
+    <Content Include="src\Game\Util\SceneFileParser.js" />
     <Content Include="src\GLSLShaders\SimpleFS.glsl" />
     <Content Include="src\GLSLShaders\SimpleVS.glsl" />
     <Content Include="src\GLSLShaders\WhiteFS.glsl" />

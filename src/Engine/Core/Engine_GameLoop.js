@@ -10,7 +10,7 @@
 *******************************************************/
 "use strict" // Operate in Strict mode
 
-var gEngine = gEngine || { };
+var gEngine = gEngine || {};
 
 // Instance variable
 var kFPS = 60;				// Frames per second
@@ -29,49 +29,54 @@ var mIsLoopRunning = false;
 var mGame = null;
 
 // This function assumes it is sub-classed from Game
-var _runLoop = function() {
-	if(mIsLoopRunning) {
-		
-		// Step A: set up for next call to _runLoop and update input!
-		requestAnimationFrame(function() { _runLoop.call(mGame); });
-		
-		// Step B: compute elapsed time since last RunLoop was executed
-		mCurrentTIme = Date.now();
-		mElapsedTime = mCurrentTIme - mPreviousTime;
-		mPreviousTime = mCurrentTIme;
-		mLagTime += mElapsedTime;
-		
-		// Setp C: update the game the appropriate number of times
-		// 		   Update only ever Milliseconds per frame.
-		//		   If lag larger than update frames, update until caught up
-		while ((mLagTime >= kMPF) && mIsLoopRunning) {
-		    gEngine.Input.update();
-			this.update();		// call Game.update();
-			mLagTime -= kMPF;
-		}
-		
-		// Step D: now let's draw
-		this.draw();		// Call Game.draw()
-	}
+var _runLoop = function () {
+    if (mIsLoopRunning) {
+
+        // Step A: set up for next call to _runLoop and update input!
+        requestAnimationFrame(function () { _runLoop.call(mGame); });
+
+        // Step B: compute elapsed time since last RunLoop was executed
+        mCurrentTIme = Date.now();
+        mElapsedTime = mCurrentTIme - mPreviousTime;
+        mPreviousTime = mCurrentTIme;
+        mLagTime += mElapsedTime;
+
+        // Setp C: update the game the appropriate number of times
+        // 		   Update only ever Milliseconds per frame.
+        //		   If lag larger than update frames, update until caught up
+        while ((mLagTime >= kMPF) && mIsLoopRunning) {
+            gEngine.Input.update();
+            this.update();		// call Game.update();
+            mLagTime -= kMPF;
+        }
+
+        // Step D: now let's draw
+        this.draw();		// Call Game.draw()
+    }
 };
 
-var start = function(Game) {
-	mGame = Game;
-	
-	// Step A: reset frame time
-	mPreviousTime = Date.now();
-	mLagTime = 0.0;
-	
-	// Step B: remember that loop is now running
-	mIsLoopRunning = true;
-	
-	// Step C: request _runLoop to start when loading is done
-	requestAnimationFrame(function() { _runLoop.call(mGame); });
-}; 
+var _startLoop = function () {
+    // Step A: reset frame time
+    mPreviousTime = Date.now();
+    mLagTime = 0.0;
+    // Step B: remember that loop is now running
+    mIsLoopRunning = true;
+    // Step C: request _runLoop to start when loading is done
+    requestAnimationFrame(function () { _runLoop.call(mMyGame); });
+};
 
-gEngine.GameLoop = (function() {
-	var mPublic = {
-		start: start
-	};
-	return mPublic;
+var start = function (myGame) {
+    mMyGame = myGame;
+    gEngine.ResourceMap.setLoadCompletedCallback(
+        function () {
+            mMyGame.initialize();
+            _startLoop();
+        });
+};
+
+gEngine.GameLoop = (function () {
+    var mPublic = {
+        start: start
+    };
+    return mPublic;
 }());
