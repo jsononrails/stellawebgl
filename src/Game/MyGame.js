@@ -1,7 +1,7 @@
-function Game() {
+function MyGame() {
 
     // scene file name
-    this.kSceneFile = "Assets/scene.xml";
+    this.kSceneFile = "src/Assets/scene.xml";
 
     // all squares
     this.mSqSet = new Array(); // these are the renderable objects
@@ -10,18 +10,18 @@ function Game() {
     this.mCamera = null;
 
     // Initialize the game
-    this.initialize();
+    //this.initialize();
 };
 
-Game.prototype.loadScene = function () {
+MyGame.prototype.loadScene = function () {
     gEngine.TextFileLoader.loadTextFile(this.kSceneFile, gEngine.TextFileLoader.eTextFileType.eEXMLFile);
 };
 
-Game.prototype.unloadScene = function () {
+MyGame.prototype.unloadScene = function () {
     gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
 };
 
-Game.prototype.initialize = function () {
+MyGame.prototype.initialize = function () {
     var sceneParser = new SceneFileParser(this.kSceneFile);
 
     // Step A: set up the cameras
@@ -38,7 +38,7 @@ Game.prototype.initialize = function () {
 
 // The update funciton, updates the application state. Make sure to _NOT_ draw
 // anything from this function!
-Game.prototype.update = function () {
+MyGame.prototype.update = function () {
     // For this very simple gam, lets move the white square and pulse the red
     var whiteXform = this.mSqSet[0].getXform();
     var delta = 0.05;
@@ -66,7 +66,7 @@ Game.prototype.update = function () {
 
 // This is the draw function, make sure to setup proper drawing environment,
 // and more importantly, make sure to _NOT_ change any state.
-Game.prototype.draw = function () {
+MyGame.prototype.draw = function () {
     // Step A: clear the canvas
     gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]); // clear to light gray
 

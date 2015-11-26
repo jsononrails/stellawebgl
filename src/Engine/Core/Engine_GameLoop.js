@@ -26,7 +26,7 @@ var mElapsedTime;
 var mIsLoopRunning = false;
 
 // Reference to game logic
-var mGame = null;
+var mMyGame = null;
 
 // This function assumes it is sub-classed from Game
 var _runLoop = function () {

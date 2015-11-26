@@ -45,16 +45,13 @@ gEngine.Core = (function () {
         gEngine.Input.initialize();
 
         // Inites DefaultResources, when done, invoke startScene(myGame).
-        gEngine.DefaultResources.initialize(function (myGame) {
-            myGame.loadScene.call(myGame);          // Called in this way to keep correct context
-            myGame.GameLoop.start(myGame);          // call initialize() only after async loading is done
-        });
+        gEngine.DefaultResources.initialize(function() { startScene(myGame); } );
 
     };
 
-    var startScene = function (Game) {
-        Game.initialize.call(Game);		// Called this way to keep correct context
-        gEngine.GameLoop.start(Game);	// start the game loop after initialization
+    var startScene = function (myGame) {
+        myGame.loadScene.call(myGame);		// Called this way to keep correct context
+        gEngine.GameLoop.start(myGame);	// start the game loop after initialization
     };
 
     // Clears the draw area and draws one square
