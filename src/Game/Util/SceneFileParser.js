@@ -10,10 +10,9 @@
 ******************************************************************/
 "use strict"	// Operate in Strict mode
 
+var mSceneXml = null;
 function SceneFileParser(sceneFilePath) {
     this.mSceneXml = gEngine.ResourceMap.retrieveAsset(sceneFilePath);
-    console.log(sceneFilePath);
-    console.log(this.mSceneXml);
 };
 
 SceneFileParser.prototype._getElm = function (tagElm) {

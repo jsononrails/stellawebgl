@@ -14,7 +14,7 @@ function MyGame() {
 };
 
 MyGame.prototype.loadScene = function () {
-    gEngine.TextFileLoader.loadTextFile(this.kSceneFile, gEngine.TextFileLoader.eTextFileType.eEXMLFile);
+	gEngine.TextFileLoader.loadTextFile(this.kSceneFile, gEngine.TextFileLoader.eTextFileType.eXMLFile);
 };
 
 MyGame.prototype.unloadScene = function () {
