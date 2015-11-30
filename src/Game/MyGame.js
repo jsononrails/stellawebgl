@@ -33,7 +33,7 @@ MyGame.prototype.initialize = function () {
     sceneParser.parseSquares(this.mSqSet);
 
     // Step F: Start the game loop running
-    gEngine.GameLoop.start(this);
+    //gEngine.GameLoop.start(this);
 };
 
 // The update funciton, updates the application state. Make sure to _NOT_ draw

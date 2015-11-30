@@ -39,7 +39,7 @@ gEngine.TextFileLoader = (function() {
                     var parser = new DOMParser();
 					var rspText = req.responseText;
                     fileContent = parser.parseFromString(rspText, "text/xml");
-					console.log(fileContent);
+					//console.log(fileContent);
                 } else {
                     fileContent = req.responseText;
                 }

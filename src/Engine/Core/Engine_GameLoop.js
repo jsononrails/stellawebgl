@@ -34,7 +34,7 @@ var _runLoop = function() {
 
         // Step A: set up for next call to _runLoop and update input!
         requestAnimationFrame(function() {
-            _runLoop.call(mGame);
+            _runLoop.call(mMyGame);
         });
 
         // Step B: compute elapsed time since last RunLoop was executed
@@ -44,8 +44,8 @@ var _runLoop = function() {
         mLagTime += mElapsedTime;
 
         // Setp C: update the game the appropriate number of times
-        // 		   Update only ever Milliseconds per frame.
-        //		   If lag larger than update frames, update until caught up
+        //         Update only ever Milliseconds per frame.
+        //         If lag larger than update frames, update until caught up
         while ((mLagTime >= kMPF) && mIsLoopRunning) {
             gEngine.Input.update();
             this.update(); // call Game.update();
