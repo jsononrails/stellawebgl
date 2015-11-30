@@ -54,6 +54,9 @@ var _runLoop = function() {
 
         // Step D: now let's draw
         this.draw(); // Call Game.draw()
+    } else {
+        // the game loop has stopped, unload current scene
+        mMyGame.unloadScene();
     }
 };
 
@@ -78,9 +81,14 @@ var start = function(myGame) {
         });
 };
 
+var stop = function() {
+    mIsLoopRunning = false;
+};
+
 gEngine.GameLoop = (function() {
     var mPublic = {
-        start: start
+        start: start,
+        stop: stop
     };
     return mPublic;
 }());

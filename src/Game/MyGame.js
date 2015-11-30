@@ -13,6 +13,9 @@ function MyGame() {
     //this.initialize();
 };
 
+// inherit from Scene abstract class
+gEngine.Core.inheritPrototype(MyGame, Scene);
+
 MyGame.prototype.loadScene = function () {
 	gEngine.TextFileLoader.loadTextFile(this.kSceneFile, gEngine.TextFileLoader.eTextFileType.eXMLFile);
 };
@@ -40,19 +43,29 @@ MyGame.prototype.initialize = function () {
 // anything from this function!
 MyGame.prototype.update = function () {
     // For this very simple gam, lets move the white square and pulse the red
-    var whiteXform = this.mSqSet[0].getXform();
+    var xform = this.mSqSet[0].getXform();
     var delta = 0.05;
 
     // Step A: test for white square movement
+
+    // Left
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left)) {
+        xform.IncXPosBy(-delta);
+        if (xform.getXPos() < 11) { // this is the left-boundary
+            gEngine.GameLoop.stop();
+        }
+    }
+
+    // Right
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Right)) {
-        if (whiteXform.getXPos() > 30) // this is right-bound of the window
-            whiteXform.setPosition(10, 60);
-        whiteXform.incXPosBy(delta);
+        if (xform.getXPos() > 30) // this is right-bound of the window
+            xform.setPosition(10, 60);
+        xform.incXPosBy(delta);
     }
 
     // Step B: test for white square rotation
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Up)) {
-        whiteXform.incRotationByDegree(25);
+        xform.incRotationByDegree(25);
     }
 
     // Step C: pulse the red square
@@ -62,6 +75,11 @@ MyGame.prototype.update = function () {
             redXform.setSize(2, 2);
         redXform.incSizeby(delta);
     }
+};
+
+MyGame.prototype.unloadScene = function() {
+    var nextLevel = new BlueLevel();        // next Level to be loaded
+    gEngine.Core.startScene(nextLevel);
 };
 
 // This is the draw function, make sure to setup proper drawing environment,
