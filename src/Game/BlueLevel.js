@@ -12,7 +12,7 @@
 
 function BlueLevel() {
 	// scene file name
-	this.kSceneFile = "assets/BlueLevel.xml";
+	this.kSceneFile = "src/assets/BlueLevel.xml";
 	// all squares
 	this.mSqSet = [];		// these are renderable objects
 	// the camera to view the scene
@@ -32,8 +32,6 @@ BlueLevel.prototype.initialize = function() {
 
     // Step A: set up the cameras
     this.mCamera = sceneParser.parseCamera();
-
-    this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);	// set background to dark grey
 
     // Step B: create the shader
     sceneParser.parseSquares(this.mSqSet);
@@ -61,7 +59,7 @@ BlueLevel.prototype.update = function() {
     
     // Left
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left)) {
-		xform.IncXPosBy(-delta);
+		xform.incXPosBy(-delta);
 		if (xform.getXPos() < 11) { // this is the left-boundary
 			gEngine.GameLoop.stop();
 		}

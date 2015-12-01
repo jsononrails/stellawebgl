@@ -30,8 +30,6 @@ MyGame.prototype.initialize = function () {
     // Step A: set up the cameras
     this.mCamera = sceneParser.parseCamera();
 
-    this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);	// set background to dark grey
-
     // Step B: create the shader
     sceneParser.parseSquares(this.mSqSet);
 
@@ -50,7 +48,7 @@ MyGame.prototype.update = function () {
 
     // Left
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left)) {
-        xform.IncXPosBy(-delta);
+        xform.incXPosBy(-delta);
         if (xform.getXPos() < 11) { // this is the left-boundary
             gEngine.GameLoop.stop();
         }
@@ -78,6 +76,9 @@ MyGame.prototype.update = function () {
 };
 
 MyGame.prototype.unloadScene = function() {
+	// unload the scene file
+	gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
+	
     var nextLevel = new BlueLevel();        // next Level to be loaded
     gEngine.Core.startScene(nextLevel);
 };

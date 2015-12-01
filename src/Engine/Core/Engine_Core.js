@@ -71,7 +71,8 @@ gEngine.Core = (function () {
         getGL: getGL,
         initializeEngineCore: initializeEngineCore,
         clearCanvas: clearCanvas,
-        inheritPrototype: inheritPrototype
+        inheritPrototype: inheritPrototype,
+		startScene: startScene
     };
 
     return mPublic;

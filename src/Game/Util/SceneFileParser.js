@@ -41,7 +41,6 @@ SceneFileParser.prototype.parseCamera = function () {
         w,                                 // width of camera
         viewport                          // viewport (orgX, orgY, width, height)
     );
-
     cam.setBackgroundColor(bgColor);
     return cam;
 };
