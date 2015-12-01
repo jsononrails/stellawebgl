@@ -81,7 +81,7 @@ BlueLevel.prototype.update = function() {
     var redXform = this.mSqSet[1].getXform();
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Down)) {
         if (redXform.getWidth() > 5)
-            redXform.setSize(2, 2);
+            redXform.setSize(2, 3);
         redXform.incSizeby(delta);
     }
 };
