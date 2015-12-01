@@ -13,6 +13,11 @@
 function BlueLevel() {
 	// scene file name
 	this.kSceneFile = "src/assets/BlueLevel.xml";
+
+    // audio clips: supports both mp3 and wav formats
+    this.kBgClip = "src/assets/sounds/BGClip.mp3";
+    this.kCue = "src/assets/sounds/BlueLevel_cue.wav";
+
 	// all squares
 	this.mSqSet = [];		// these are renderable objects
 	// the camera to view the scene
@@ -25,6 +30,9 @@ gEngine.Core.inheritPrototype(BlueLevel, Scene);
 // overried methods
 BlueLevel.prototype.loadScene = function() {
 	gEngine.TextFileLoader.loadTextFile(this.kSceneFile, gEngine.TextFileLoader.eTextFileType.eXMLFile);
+
+    gEngine.AudioClips.loadAudio(this.kBgClip);
+    gEngine.AudioClips.loadAudio(this.kCue);
 };
 
 BlueLevel.prototype.initialize = function() {
@@ -35,6 +43,8 @@ BlueLevel.prototype.initialize = function() {
 
     // Step B: create the shader
     sceneParser.parseSquares(this.mSqSet);
+
+    gEngine.AudioClips.playBackgroundAudio(this.kBgClip);
 };
 
 BlueLevel.prototype.draw = function() {
@@ -59,6 +69,7 @@ BlueLevel.prototype.update = function() {
     
     // Left
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left)) {
+        gEngine.AudioClips.playACue(this.kCue);
 		xform.incXPosBy(-delta);
 		if (xform.getXPos() < 11) { // this is the left-boundary
 			gEngine.GameLoop.stop();
@@ -67,6 +78,7 @@ BlueLevel.prototype.update = function() {
 
     // Right
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Right)) {
+        gEngine.AudioClips.playACue(this.kCue);
         if (xform.getXPos() > 30) // this is right-bound of the window
             xform.setPosition(10, 60);
         xform.incXPosBy(delta);
@@ -87,6 +99,11 @@ BlueLevel.prototype.update = function() {
 };
 
 BlueLevel.prototype.unloadScene = function() {
+    // stop the background audio
+    gEngine.AudioClips.stopBackgroundAudio();
+    gEngine.AudioClips.unloadAudio(this.kBgClip);
+    gEngine.AudioClips.unloadAudio(this.kCue);
+
 	// unload the scene file
 	gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
 

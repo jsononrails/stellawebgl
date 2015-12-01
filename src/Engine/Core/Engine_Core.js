@@ -44,7 +44,10 @@ gEngine.Core = (function () {
         // initialize input
         gEngine.Input.initialize();
 
-        // Inites DefaultResources, when done, invoke startScene(myGame).
+        // initialize audio
+        gEngine.AudioClips.InitAudioContext();
+        
+        // Initiates DefaultResources, when done, invoke startScene(myGame).
         gEngine.DefaultResources.initialize(function() { startScene(myGame); } );
 
     };

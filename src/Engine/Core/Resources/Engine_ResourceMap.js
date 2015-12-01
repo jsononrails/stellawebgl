@@ -14,6 +14,7 @@ var gEngine = gEngine || {};
 
 var MapEntry = function (rName) {
     this.mAsset = rName;
+    this.mRefCount = 1;
 };
 
 gEngine.ResourceMap = (function () {
@@ -25,6 +26,10 @@ gEngine.ResourceMap = (function () {
 
     // callback function when all textures are loaded
     var mLoadCompleteCallback = null;
+
+    var incAssetRefCount = function(rName) {
+        mResourceMap[rName].mRefCount += 1;
+    };
 
     var _checkForAllLoadCompleted = function () {
         if ((mNumOutstandingLoads === 0) && (mLoadCompleteCallback !== null)) {
@@ -69,8 +74,16 @@ gEngine.ResourceMap = (function () {
     };
 
     var unloadAsset = function (rName) {
-        if (rName in mResourceMap)
-            delete mResourceMap[rName];
+        var c = 0;
+
+        if (rName in mResourceMap) {
+            mResourceMap[rName].mRefCount -= 1;
+
+            c = mResourceMap[rName].mRefCount;
+            if(c === 0)
+                delete mResourceMap[rName];
+        }
+            
     };
 
     // public interface for this object

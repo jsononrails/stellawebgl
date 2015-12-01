@@ -3,6 +3,9 @@ function MyGame() {
     // scene file name
     this.kSceneFile = "src/Assets/scene.xml";
 
+    this.kBgClip = "src/assets/sounds/BGClip.mp3";
+    this.kCue = "src/assets/sounds/BlueLevel_cue.wav";
+
     // all squares
     this.mSqSet = new Array(); // these are the renderable objects
 
@@ -18,10 +21,10 @@ gEngine.Core.inheritPrototype(MyGame, Scene);
 
 MyGame.prototype.loadScene = function () {
 	gEngine.TextFileLoader.loadTextFile(this.kSceneFile, gEngine.TextFileLoader.eTextFileType.eXMLFile);
-};
-
-MyGame.prototype.unloadScene = function () {
-    gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
+    
+    // load audio 
+    gEngine.AudioClips.loadAudio(this.kBgClip);
+    gEngine.AudioClips.loadAudio(this.kCue);
 };
 
 MyGame.prototype.initialize = function () {
@@ -32,6 +35,9 @@ MyGame.prototype.initialize = function () {
 
     // Step B: create the shader
     sceneParser.parseSquares(this.mSqSet);
+
+    // start background music
+    gEngine.AudioClips.playBackgroundAudio(this.kBgClip);
 
     // Step F: Start the game loop running
     //gEngine.GameLoop.start(this);
@@ -48,6 +54,7 @@ MyGame.prototype.update = function () {
 
     // Left
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left)) {
+        gEngine.AudioClips.playACue(this.kCue);
         xform.incXPosBy(-delta);
         if (xform.getXPos() < 11) { // this is the left-boundary
             gEngine.GameLoop.stop();
@@ -56,6 +63,7 @@ MyGame.prototype.update = function () {
 
     // Right
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Right)) {
+        gEngine.AudioClips.playACue(this.kCue);
         if (xform.getXPos() > 30) // this is right-bound of the window
             xform.setPosition(10, 60);
         xform.incXPosBy(delta);
@@ -76,6 +84,13 @@ MyGame.prototype.update = function () {
 };
 
 MyGame.prototype.unloadScene = function() {
+     // stop background audio before unloading it
+    gEngine.AudioClips.stopBackgroundAudio();
+
+    // unload the scene resources
+    gEngine.AudioClips.unloadAudio(this.kBgClip);
+    gEngine.AudioClips.unloadAudio(this.kCue);
+
 	// unload the scene file
 	gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
 	

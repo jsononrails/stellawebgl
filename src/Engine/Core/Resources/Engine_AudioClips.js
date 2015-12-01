@@ -37,27 +37,31 @@ gEngine.AudioClips = (function() {
 				}
 			};
 			
-			req.open('GET', clipNam, true);
+			req.open('GET', clipName, true);
+
 			// specify that the request retrieves binary data
-			req.responseType = 'arrayBuffer';
+			req.responseType = "arraybuffer";
 			
 			req.onload = function() {
+				var audioData = req.response;
+			
 				// asynchronously decode, then call the function in parameter
 				mAudioContext.decodeAudioData(req.response, function(buffer) {
 					gEngine.ResourceMap.asyncLoadCompleted(clipName, buffer);
 				});
 			};
+			
 			req.send();
 		} else {
 			gEngine.ResourceMap.inAssetRefCount(clipName);
 		}
 	};
 	
-	var unloadAUdio = function(clipName) {
+	var unloadAudio = function(clipName) {
 		gEngine.ResourceMap.unloadAsset(clipName);
 	};
 	
-	var playACue = funciton(clipName) {
+	var playACue = function(clipName) {
 		var clipInfo = gEngine.ResourceMap.retrieveAsset(clipName);
 		if(clipInfo != null) {
 			// SourceNodes are one use only
@@ -69,10 +73,38 @@ gEngine.AudioClips = (function() {
 	};
 	
 	var playBackgroundAudio = function(clipName) {
-		// TODO
+		var clipInfo = gEngine.ResourceMap.retrieveAsset(clipName);
+		if(clipInfo !== null) {
+			// stop audio if playing.
+			stopBackgroundAudio();
+			mBgAudioNode = mAudioContext.createBufferSource();
+			mBgAudioNode.buffer = clipInfo;
+			mBgAudioNode.connect(mAudioContext.destination);
+			mBgAudioNode.loop = true;
+			mBgAudioNode.start(0);
+		}
+	};
+
+	var stopBackgroundAudio = function() {
+		// check if the audio is playing
+		if(mBgAudioNode !== null) {
+			mBgAudioNode.stop(0);
+			mBgAudioNode = null;
+		}
+	};
+
+	var isBackgroundAudioPlaying = function() {
+		return (mBgAudioNode !== null);
 	};
 	
 	var mPublic = { 
+		InitAudioContext: InitAudioContext,
+		loadAudio: loadAudio,
+		unloadAudio: unloadAudio,
+		playACue: playACue,
+		playBackgroundAudio: playBackgroundAudio,
+		stopBackgroundAudio: stopBackgroundAudio,
+		isBackgroundAudioPlaying, isBackgroundAudioPlaying
 	};
 	
 	return mPublic;
