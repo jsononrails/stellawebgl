@@ -14,6 +14,10 @@ function BlueLevel() {
 	// scene file name
 	this.kSceneFile = "src/assets/BlueLevel.xml";
 
+	// textures: (not: jpg does not support transparency )
+	this.kPortal = "src/assets/minion_portal.jpg";
+	this.kCollector = "src/assets/minion_collector.jp";
+	
     // audio clips: supports both mp3 and wav formats
     this.kBgClip = "src/assets/sounds/BGClip.mp3";
     this.kCue = "src/assets/sounds/BlueLevel_cue.wav";
@@ -29,8 +33,14 @@ gEngine.Core.inheritPrototype(BlueLevel, Scene);
 
 // overried methods
 BlueLevel.prototype.loadScene = function() {
+	// load scene
 	gEngine.TextFileLoader.loadTextFile(this.kSceneFile, gEngine.TextFileLoader.eTextFileType.eXMLFile);
 
+	// load textures
+	gEngine.Textures.loadTexture(this.kPortal);
+	gEngine.Textures.loadTexture(this.kCollector);
+
+	// load audio
     gEngine.AudioClips.loadAudio(this.kBgClip);
     gEngine.AudioClips.loadAudio(this.kCue);
 };
@@ -38,12 +48,13 @@ BlueLevel.prototype.loadScene = function() {
 BlueLevel.prototype.initialize = function() {
 	 var sceneParser = new SceneFileParser(this.kSceneFile);
 
-    // Step A: set up the cameras
+    // Step A: read in the camera
     this.mCamera = sceneParser.parseCamera();
 
-    // Step B: create the shader
+    // Step B: read all the squares and textureSquares
     sceneParser.parseSquares(this.mSqSet);
-
+	sceneParser.parseTextureSquares(this.mSqSet);
+	
     gEngine.AudioClips.playBackgroundAudio(this.kBgClip);
 };
 
@@ -96,14 +107,28 @@ BlueLevel.prototype.update = function() {
             redXform.setSize(2, 3);
         redXform.incSizeby(delta);
     }
+
+	// continously change texture tinting
+	var c = this.mSqSet[1].getColor();
+	var ca = c[3] + delta;
+	if (ca > 1) {
+		ca = 0;
+	}
+	c[3] = ca;
 };
 
 BlueLevel.prototype.unloadScene = function() {
     // stop the background audio
     gEngine.AudioClips.stopBackgroundAudio();
+
+	// unload audio
     gEngine.AudioClips.unloadAudio(this.kBgClip);
     gEngine.AudioClips.unloadAudio(this.kCue);
 
+	// unload textures
+	gEngine.Textures.unloadTexture(this.kPortal);
+	gEngine.Textures.unloadTexture(this.kCollector);
+	
 	// unload the scene file
 	gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
 
