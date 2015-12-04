@@ -1,21 +1,27 @@
 /******************************************************
 * File: Renderable.js
-* Description: Class for Drawing Renderable Objects
+* Description: Base Class for Drawing Renderable Objects
 * Author: Jason McBride
 * Date: Nov 10th 2015
-* Version: 1.0
+* Version: 1.2
 *
 * $History$
-* Version 1.1 - Initial
+* Version 1.0 - Initial
 *
+* Version 1.1
 * Nov 22nd 2015 - Jason McBride
 * 		Update: added is null check to draw function
 *				to avoid drawing if shader hasn't loaded yet
+*
+* Version 1.2
+* Dec 3rd 2015 - Jason McBride
+*		Update: converting to be a base class for 
+*				other renderables
 *******************************************************/
 "use strict"	// Operate in Strict mode
 
-function Renderable(shader) {
-	this.mShader = shader;			// the shader for shading this object
+function Renderable() {
+	this.mShader = gEngine.DefaultResource.getConstColorShader();
 	this.mColor = [1, 1, 1, 1];		// Color for the fragment shader
 	this.mXform = new Transform();	// transform operator for the object
 }
@@ -28,6 +34,9 @@ Renderable.prototype.draw = function (vpMatrix) {
 		gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 	}
 };
+
+// protected function to be modified by subclasses
+Renderable.prototype._setShader = function(shader) { this.mShader = shader; };
 
 // Accessors
 Renderable.prototype.setColor = function(color) { this.mColor = color; };

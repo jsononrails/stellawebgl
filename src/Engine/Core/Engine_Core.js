@@ -3,10 +3,15 @@
 * Description: Core of WebGL Game Engine
 * Author: Jason McBride
 * Date: Nov 7th 2015
-* Version: 1.0
+* Version: 1.1
 *
 * $History$
 * Version 1.0 - Initial
+*
+* Version 1.1
+* Dec 3rd 2015 - Jason McBride
+* 		Update: added Texture support
+*
 *******************************************************/
 "use strict" // Operate in Strict mode
 
@@ -25,8 +30,15 @@ gEngine.Core = (function () {
 
         // Get teh standard or experimental webgl and binds to the Cancas area
         // store the results to the instance variable mGL
-        mGL = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+        mGL = canvas.getContext("webgl", {alpha:false}) || canvas.getContext("experimental-webgl", {alpha:false});
 
+		// allows transparency with textures.
+		mGL.blendFunc(mGL.SRC_ALPHA, mGL.ONE_MINUS_SRC_ALPHA);
+		mGL.enable(mGL.BLEND);
+		
+		// Set images to flip the y axis to match the texture coordinate space.
+		mGL.pixelStorei(mGL.UNPACK_FLIP_Y_WEBGL, true);
+		
         if (mGL === null) {
             document.write("<br><b>WebGL is not supported!</b>");
         }
