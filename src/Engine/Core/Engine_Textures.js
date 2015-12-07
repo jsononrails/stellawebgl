@@ -77,7 +77,7 @@ gEngine.Textures = (function() {
 		);
 		
 		// creates a mipmap for this texture
-		gl.generateMipMap(gl.TEXTURE_2D);
+		gl.generateMipmap(gl.TEXTURE_2D);
 		
 		// tells webGL we are done manipulating data at the mGL.TEXTURE_2D target.
 		gl.bindTexture(gl.TEXTURE_2D, null);
@@ -89,19 +89,20 @@ gEngine.Textures = (function() {
 			textureID
 		);
 		
-		gEngine.ResourceMap.asyncloadCompleted(textureName, texInfo);
+		gEngine.ResourceMap.asyncLoadCompleted(textureName, texInfo);
 	};
 	
 	var activateTexture = function(textureName) {
 		var gl = gEngine.Core.getGL();
+
 		var texInfo = gEngine.ResourceMap.retrieveAsset(textureName);
 		
 		// binds our texture reference to the current webGL texture functionality
 		gl.bindTexture(gl.TEXTURE_2D, texInfo.mGLTexID);
 		
 		// to prevent texture wrappings
-		g.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-		g.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 		
 		// handles how magnification and minimization filters work
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);

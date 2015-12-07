@@ -21,7 +21,7 @@
 "use strict"	// Operate in Strict mode
 
 function Renderable() {
-	this.mShader = gEngine.DefaultResource.getConstColorShader();
+	this.mShader = gEngine.DefaultResources.getConstColorShader();
 	this.mColor = [1, 1, 1, 1];		// Color for the fragment shader
 	this.mXform = new Transform();	// transform operator for the object
 }

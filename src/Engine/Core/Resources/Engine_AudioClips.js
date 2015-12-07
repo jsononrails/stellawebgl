@@ -104,7 +104,7 @@ gEngine.AudioClips = (function() {
 		playACue: playACue,
 		playBackgroundAudio: playBackgroundAudio,
 		stopBackgroundAudio: stopBackgroundAudio,
-		isBackgroundAudioPlaying, isBackgroundAudioPlaying
+		isBackgroundAudioPlaying: isBackgroundAudioPlaying
 	};
 	
 	return mPublic;

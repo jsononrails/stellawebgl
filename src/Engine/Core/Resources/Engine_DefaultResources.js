@@ -43,8 +43,8 @@ gEngine.DefaultResources = (function() {
 		gEngine.TextFileLoader.loadTextFile(kSimpleFS, gEngine.TextFileLoader.eTextFileType.eTextFile);
 		
 		// texture shader:
-		gEngine.TextFileLoader.loadTextFile(kTextureVS, gEngine.TextFileLoader.eTextFile.eTextFile);
-		gEngine.TextFileLoader.loadTextFile(kTextureFS, gEngine.TextFileLoader.eTextFile.eTextFile);
+		gEngine.TextFileLoader.loadTextFile(kTextureVS, gEngine.TextFileLoader.eTextFileType.eTextFile);
+		gEngine.TextFileLoader.loadTextFile(kTextureFS, gEngine.TextFileLoader.eTextFileType.eTextFile);
 		
 		gEngine.ResourceMap.setLoadCompleteCallback(function() { _createShaders(callBackFunction); });
 	};

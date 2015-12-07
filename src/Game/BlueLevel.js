@@ -16,7 +16,7 @@ function BlueLevel() {
 
 	// textures: (not: jpg does not support transparency )
 	this.kPortal = "src/assets/minion_portal.jpg";
-	this.kCollector = "src/assets/minion_collector.jp";
+	this.kCollector = "src/assets/minion_collector.jpg";
 	
     // audio clips: supports both mp3 and wav formats
     this.kBgClip = "src/assets/sounds/BGClip.mp3";
