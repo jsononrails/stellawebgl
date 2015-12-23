@@ -60,5 +60,14 @@ SpriteRenderable.prototype.setElementPixelPositions = function(left, right, bott
 SpriteRenderable.prototype.getElementUVCoordinateArray = function() {
 	return [
 		this.mTexRight, this.mTexTop,		// x, y of top-right
+		this.mTexLeft,	this.mTexTop,
+		this.mTexRight,	this.mTexBottom,
+		this.mTexLeft,	this.mTexBottom
 	];
+};
+
+SpriteRenderable.prototype.draw = function(pixelColor, vpMatrix) {
+	// set the current texture coordinate
+	this.mShader.setTextureCoordinate(this.getElementUVCoordinateArray());
+	TextureRenderable.prototype.draw.call(this, pixelColor, vpMatrix);
 };
