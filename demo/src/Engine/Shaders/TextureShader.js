@@ -1,15 +1,16 @@
-/******************************************************
-* File: TextureShader.js
-* Description: Texture Shader Class
-* Author: Jason McBride
-* Date: Dec 3rd, 2015
-* Version: 1.0
-*
-* $History$
-* Version 1.0 - Initial
-*******************************************************/
-"use strict";  
+/* 
+ * File: TextureShader.js
+ * Subclass from SimpleShader
+ * Implements a Textured ShaderProgram object.
+ */
 
+/*jslint node: true, vars: true */
+/*global gEngine: false, SimpleShader: false */
+/* find out more about jslint: http://www.jslint.com/help.html */
+
+"use strict";  // Operate in Strict mode such that variables must be declared before used!
+
+//<editor-fold desc="constructor">
 // constructor
 function TextureShader(vertexShaderPath, fragmentShaderPath) {
     // Call super class constructor
@@ -25,6 +26,11 @@ function TextureShader(vertexShaderPath, fragmentShaderPath) {
 // get all the prototype functions from SimpleShader
 gEngine.Core.inheritPrototype(TextureShader, SimpleShader);
 
+
+//</editor-fold>
+
+// <editor-fold desc="Public Methods">
+
 // Overriding the Activation of the shader for rendering
 TextureShader.prototype.activateShader = function (pixelColor, vpMatrix) {
     // first call the super class's activate
@@ -36,3 +42,4 @@ TextureShader.prototype.activateShader = function (pixelColor, vpMatrix) {
     gl.enableVertexAttribArray(this.mShaderTextureCoordAttribute);
     gl.vertexAttribPointer(this.mShaderTextureCoordAttribute, 2, gl.FLOAT, false, 0, 0);
 };
+//</editor-fold>

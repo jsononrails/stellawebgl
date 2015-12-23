@@ -1,15 +1,17 @@
-/******************************************************
-* File: SpriteShader.js
-* Description: Sprite Sheet Shader Class
-* Author: Jason McBride
-* Date: Dec 19th, 2015
-* Version: 1.0
-*
-* $History$
-* Version 1.0 - Initial
-*******************************************************/
-"use strict";  
+/* 
+ * File: SpriteShader.js
+ * Subclass from TextureShader
+ * Implements a Textured ShaderProgram object where texture coordinate can be changed
+ * at run time.
+ */
 
+/*jslint node: true, vars: true */
+/*global gEngine: false, SimpleShader: false, TextureShader: false, Float32Array: false */
+/* find out more about jslint: http://www.jslint.com/help.html */
+
+"use strict";  // Operate in Strict mode such that variables must be declared before used!
+
+//<editor-fold desc="constructor">
 // constructor 
 function SpriteShader(vertexShaderPath, fragmentShaderPath) {
     // Call super class constructor
@@ -34,6 +36,10 @@ function SpriteShader(vertexShaderPath, fragmentShaderPath) {
 // get all the prototype functions from SimpleShader
 gEngine.Core.inheritPrototype(SpriteShader, TextureShader);
 
+//</editor-fold>
+
+// <editor-fold desc="Public Methods">
+
 // Overriding the Activation of the shader for rendering
 SpriteShader.prototype.activateShader = function (pixelColor, vpMatrix) {
     // first call the super class's activate
@@ -56,3 +62,4 @@ SpriteShader.prototype.setTextureCoordinate = function (texCoord) {
     gl.bindBuffer(gl.ARRAY_BUFFER, this.mTexCoordBuffer);
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, new Float32Array(texCoord));
 };
+//</editor-fold>
