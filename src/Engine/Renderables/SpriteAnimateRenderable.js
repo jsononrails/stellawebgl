@@ -30,7 +30,7 @@ function SpriteAnimateRenderable(myTexture) {
 	this.mFirstElmLeft = 0.0; 		// 0.0 is left corner of image
 	this.mElmTop = 1.0;				// 1.0 is top corner of image
 	this.mElmWidth = 1.0;			// default sprite element size is the entire image
-	this.mElmHeiht = 1.0;
+	this.mElmHeight = 1.0;
 	this.mWidthPadding = 0.0;
 	this.mNumElems = 1;				// number of elements in an animation
 	
@@ -47,3 +47,48 @@ function SpriteAnimateRenderable(myTexture) {
 
 // inherit SpriteRenderable
 gEngine.Core.inheritPrototype(SpriteAnimateRenderable, SpriteAnimateRenderable);
+
+// set animation type
+SpriteAnimateRenderable.prototype.setAnimationType = function(animationType) {
+	this.mAnimationType = animationType;
+	this.mCurrentAnimAdvance = -1;
+	this.mCurrentElm = 0;
+	this._initAnimation();
+};
+
+SpriteAnimateRenderable.prototype._initAnimation = function() {
+	// currently running animation
+	this.mCurrentTick = 0;
+	switch(this.mAnimationType) {
+		
+		case SpriteAnimateRenderable.eAnimationType.eAnimateRight:
+			this.mCurrentElm = 0;
+			this.mCurrentAnimAdvance = 1;	// either 1 or -1
+			break;
+			
+		case SpriteAnimateRenderable.eAnimationType.eAnimateSwing:
+			this.mCurrentAnimAdvance = -1 * this.mCurrentAnimAdvance;
+			this.mCurrentElm += 2*this.mCurrentAnimAdvance;
+			break;
+			
+		case SpriteAnimateRenderable.eAnimationType.eAnimateLeft:
+			this.mCurrentElm = this.mNumElems -1;
+			this.mCurrentAnimAdvance = -1;	// either 1 or -1
+			break;
+	}
+	this._setSpriteElement();
+}
+
+SpriteAnimateRenderable.prototype._setSpriteElement = function() {
+	var left = this.mFirstElmLeft + (this.mCurrentElm * (this.mElmWidth + this.mWidthPadding));
+	
+	SpriteRenderable.prototype.setElementUVCoordinate.call(this, left, 
+		left + this.mElmWidth, 
+		this.mElmTop - this.mElmHeight, 
+		this.mElmTop);
+};
+
+// always set the right-most element to be the first
+SpriteAnimateRenderable.prototype.setSpriteSequence = function() {
+	
+};
