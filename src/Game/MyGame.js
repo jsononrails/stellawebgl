@@ -1,3 +1,14 @@
+/*
+ * File: MyGame.js 
+ * This is the logic of our game. 
+ */
+
+
+/*jslint node: true, vars: true */
+/*global gEngine: false, Scene: false, SpriteRenderable: false, Camera: false, vec2: false,
+  TextureRenderable: false, Renderable: false, SpriteAnimateRenderable: false */
+/* find out more about jslint: http://www.jslint.com/help.html */
+
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 function MyGame() {
@@ -13,7 +24,8 @@ function MyGame() {
     this.mPortal = null;
     this.mCollector = null;
     this.mFontImage = null;
-    this.mMinion = null;
+    this.mRightMinion = null;
+    this.mLeftMinion = null;
 }
 gEngine.Core.inheritPrototype(MyGame, Scene);
 
@@ -57,10 +69,31 @@ MyGame.prototype.initialize = function () {
     this.mFontImage.getXform().setPosition(13, 62);
     this.mFontImage.getXform().setSize(4, 4);
 
-    this.mMinion = new SpriteRenderable(this.kMinionSprite);
-    this.mMinion.setColor([1, 1, 1, 0]);
-    this.mMinion.getXform().setPosition(26, 56);
-    this.mMinion.getXform().setSize(5, 2.5);
+    // The right minion
+    this.mRightMinion= new SpriteAnimateRenderable(this.kMinionSprite);
+    this.mRightMinion.setColor([1, 1, 1, 0]);
+    this.mRightMinion.getXform().setPosition(26, 56.5);
+    this.mRightMinion.getXform().setSize(4, 3.2);
+    this.mRightMinion.setSpriteSequence(512, 0,     // first element pixel position: top-left 512 is top of image, 0 is left of image
+                                    204, 164,       // widthxheight in pixels
+                                    5,              // number of elements in this sequence
+                                    0);             // horizontal padding in between
+    this.mRightMinion.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateRight);
+    this.mRightMinion.setAnimationSpeed(50);
+                                // show each element for mAnimSpeed updates
+
+    // the left minion
+    this.mLeftMinion = new SpriteAnimateRenderable(this.kMinionSprite);
+    this.mLeftMinion.setColor([1, 1, 1, 0]);
+    this.mLeftMinion.getXform().setPosition(15, 56.5);
+    this.mLeftMinion.getXform().setSize(4, 3.2);
+    this.mLeftMinion.setSpriteSequence(348, 0,      // first element pixel position: top-right 164 from 512 is top of image, 0 is right of image
+                                    204, 164,       // widthxheight in pixels
+                                    5,              // number of elements in this sequence
+                                    0);             // horizontal padding in between
+    this.mLeftMinion.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateRight);
+    this.mLeftMinion.setAnimationSpeed(50);
+                                // show each element for mAnimSpeed updates
 
     // Step D: Create the hero object with texture from the lower-left corner 
     this.mHero = new SpriteRenderable(this.kMinionSprite);
@@ -84,7 +117,8 @@ MyGame.prototype.draw = function () {
     this.mCollector.draw(this.mCamera.getVPMatrix());
     this.mHero.draw(this.mCamera.getVPMatrix());
     this.mFontImage.draw(this.mCamera.getVPMatrix());
-    this.mMinion.draw(this.mCamera.getVPMatrix());
+    this.mRightMinion.draw(this.mCamera.getVPMatrix());
+    this.mLeftMinion.draw(this.mCamera.getVPMatrix());
 };
 
 // The update function, updates the application state. Make sure to _NOT_ draw
@@ -99,7 +133,7 @@ MyGame.prototype.update = function () {
     // Support hero movements
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Right)) {
         xform.incXPosBy(deltaX);
-        if (xform.getXPos() > 30) {  // this is the right-bound of the window
+        if (xform.getXPos() > 30) { // this is the right-bound of the window
             xform.setPosition(12, 60);
         }
     }
@@ -147,29 +181,40 @@ MyGame.prototype.update = function () {
     );
     // </editor-fold>
 
-    // <editor-fold desc="The minion image:">
-    // For minion: zoom to the bottom right corner by changing top left
-    texCoord = this.mMinion.getElementUVCoordinateArray();
-            // The 8 elements:
-            //      mTexRight,  mTexTop,          // x,y of top-right
-            //      mTexLeft,   mTexTop,
-            //      mTexRight,  mTexBottom,
-            //      mTexLeft,   mTexBottom
-    var t = texCoord[SpriteRenderable.eTexCoordArray.eTop] - deltaT;
-    var l = texCoord[SpriteRenderable.eTexCoordArray.eLeft] + deltaT;
+    // New code for controlling the sprite animation
+    // <editor-fold desc="controlling the sprite animation:">
+    // remember to update the minion's animation
+    this.mRightMinion.updateAnimation();
+    this.mLeftMinion.updateAnimation();
 
-    if (l > 0.5) {
-        l = 0;
-    }
-    if (t < 0.5) {
-        t = 1.0;
+    // Animate left on the sprite sheet
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.One)) {
+        this.mRightMinion.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateLeft);
+        this.mLeftMinion.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateLeft);
     }
 
-    this.mMinion.setElementUVCoordinate(
-        l,
-        texCoord[SpriteRenderable.eTexCoordArray.eRight],
-        texCoord[SpriteRenderable.eTexCoordArray.eBottom],
-        t
-    );
+    // swing animation 
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Two)) {
+        this.mRightMinion.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateSwing);
+        this.mLeftMinion.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateSwing);
+    }
+
+    // Animate right on the sprite sheet
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Three)) {
+        this.mRightMinion.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateRight);
+        this.mLeftMinion.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateRight);
+    }
+
+    // decrease the duration of showing each sprite element, thereby speeding up the animation
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Four)) {
+        this.mRightMinion.incAnimationSpeed(-2);
+        this.mLeftMinion.incAnimationSpeed(-2);
+    }
+
+    // increase the duration of showing each sprite element, thereby slowing down the animation
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Five)) {
+        this.mRightMinion.incAnimationSpeed(2);
+        this.mLeftMinion.incAnimationSpeed(2);
+    }
     // </editor-fold>
 };
