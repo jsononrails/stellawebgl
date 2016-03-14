@@ -17,7 +17,7 @@ function FontRenderable(aString) {
 	this.mText = aString;
 };
 
-FontRenderable.prototype.draw = function(vpMatrix) {
+FontRenderable.prototype.draw = function(aCamera) {
 	var widthOfOneChar = this.mXform.getWidth() / this.mText.length;
 	var heightOfOneChar = this.mXform.getHeight();
 	var yPos = this.mXform.getYPos();
@@ -47,7 +47,7 @@ FontRenderable.prototype.draw = function(vpMatrix) {
 			
 			this.mOneChar.getXform().setPosition(xPos - xOffset, yPos - yOffset);
 			
-			this.mOneChar.draw(vpMatrix);
+			this.mOneChar.draw(aCamera);
 			
 			xPos += widthOfOneChar;
 	}

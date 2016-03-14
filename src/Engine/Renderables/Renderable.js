@@ -17,6 +17,11 @@
 * Dec 3rd 2015 - Jason McBride
 *		Update: converting to be a base class for 
 *				other renderables
+*
+* Version 1.3
+* March 13, 2016 - Jason McBride
+*		Update: implementing camera
+*
 *******************************************************/
 "use strict"	// Operate in Strict mode
 
@@ -26,10 +31,10 @@ function Renderable() {
 	this.mXform = new Transform();	// transform operator for the object
 }
 
-Renderable.prototype.draw = function (vpMatrix) {
+Renderable.prototype.draw = function (aCamera) {
 	if(this.mShader !== null) { // shaders haven't loaded yet
 		var gl = gEngine.Core.getGL();
-		this.mShader.activateShader(this.mColor, vpMatrix);	// always activate the shader first
+		this.mShader.activateShader(this.mColor, aCamera);	// always activate the shader first
 		this.mShader.loadObjectTransform(this.mXform.getXform());
 		gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 	}

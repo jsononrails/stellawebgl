@@ -24,10 +24,10 @@ function TextureRenderable(myTexture) {
 gEngine.Core.inheritPrototype(TextureRenderable, Renderable);
 
 // override base class functions
-TextureRenderable.prototype.draw = function(vpMatrix) {
+TextureRenderable.prototype.draw = function(aCamera) {
 	// activate the texture
 	gEngine.Textures.activateTexture(this.mTexture);
-	Renderable.prototype.draw.call(this, vpMatrix);
+	Renderable.prototype.draw.call(this, aCamera);
 };
 
 // getter/setters

@@ -35,9 +35,9 @@ function SpriteShader(vertexShaderPath, fragmentShaderPath) {
 gEngine.Core.inheritPrototype(SpriteShader, TextureShader);
 
 // Overriding the Activation of the shader for rendering
-SpriteShader.prototype.activateShader = function (pixelColor, vpMatrix) {
+SpriteShader.prototype.activateShader = function (pixelColor, aCamera) {
     // first call the super class's activate
-    SimpleShader.prototype.activateShader.call(this, pixelColor, vpMatrix);
+    SimpleShader.prototype.activateShader.call(this, pixelColor, aCamera.getVPMatrix());
 
     // now binds the proper texture coordinate buffer
     var gl = gEngine.Core.getGL();
