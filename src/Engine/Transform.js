@@ -50,6 +50,12 @@ Transform.prototype.incXPosBy = function (delta) {
     this.setXPos(newX);
 };
 
+Transform.prototype.incYPosBy = function (delta) {
+    var newY = this.getYPos() + delta;
+    this.setYPos(newY);
+};
+
+
 Transform.prototype.incRotationByDegree = function (degree) {
     var newDegree = this.getRotationInDegree() + degree;
     this.setRotationInDegree(newDegree);

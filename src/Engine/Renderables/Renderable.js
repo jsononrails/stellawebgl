@@ -34,6 +34,7 @@ function Renderable() {
 Renderable.prototype.draw = function (aCamera) {
 	if(this.mShader !== null) { // shaders haven't loaded yet
 		var gl = gEngine.Core.getGL();
+
 		this.mShader.activateShader(this.mColor, aCamera);	// always activate the shader first
 		this.mShader.loadObjectTransform(this.mXform.getXform());
 		gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);

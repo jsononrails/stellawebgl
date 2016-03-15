@@ -49,7 +49,7 @@ SpriteRenderable.prototype.setElementUVCoordinate = function (left, right, botto
 };
 
 // specify element region by pixel positions (between 0 to image resolutions)
-SpriteRenderable.prototype.setElementPixelPositions = function (left, right, bottom, top) {
+SpriteRenderable.prototype.setElementPixelPosition = function (left, right, bottom, top) {
     var texInfo = gEngine.ResourceMap.retrieveAsset(this.mTexture);
     // entire image width, height
     var imageW = texInfo.mWidth;
