@@ -38,7 +38,11 @@ Minion.prototype.update = function() {
 	
 	// if fly off to the left, re-appear at the right
 	if(xform.getXPos() <0) {
+		this.setVisibility(false);
 		xform.setXPos(100);
 		xform.setYPos(65 * Math.random());
+	}
+	else {
+		this.setVisibility(true);
 	}
 };
