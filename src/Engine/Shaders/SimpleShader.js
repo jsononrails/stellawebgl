@@ -73,10 +73,10 @@ function SimpleShader(vertexShaderPath, fragmentShaderPath) {
 SimpleShader.prototype.getShader = function () { return this.mCompiledShader; };
 
 // Activate the shader for rendering
-SimpleShader.prototype.activateShader = function (pixelColor, aCamera) {
+SimpleShader.prototype.activateShader = function (pixelColor, vpMatrix) {
     var gl = gEngine.Core.getGL();
     gl.useProgram(this.mCompiledShader);
-    gl.uniformMatrix4fv(this.mViewProjTransform, false, aCamera.getVPMatrix());
+    gl.uniformMatrix4fv(this.mViewProjTransform, false, vpMatrix);
     gl.enableVertexAttribArray(this.mShaderVertexPositionAttribute);
     gl.uniform4fv(this.mPixelColor, pixelColor);
 };
