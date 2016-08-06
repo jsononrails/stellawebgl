@@ -22,6 +22,9 @@ function MyGame() {
     this.mHero = null;
     this.mMinionset = null;
     this.mDyePack = null;
+    this.mBrain = null;
+
+    this.mMode = "H";
 }
 gEngine.Core.inheritPrototype(MyGame, Scene);
 
@@ -59,6 +62,8 @@ MyGame.prototype.initialize = function () {
     // Step D: Create the hero object
     this.mHero = new Hero(this.kMinionSprite);
 
+    this.mBrain = new Brain(this.kMinionSprite);
+
     // Step E: Create and initialize message output
     this.mMsg = new FontRenderable("Status Message");
     this.mMsg.setColor([0, 0, 0, 1]);
@@ -78,6 +83,7 @@ MyGame.prototype.draw = function () {
     // Step  C: draw everything
     this.mHero.draw(this.mCamera);
     this.mMinionset.draw(this.mCamera);
+    this.mBrain.draw(this.mCamera);
     this.mDyePack.draw(this.mCamera);
     this.mMsg.draw(this.mCamera);
 };
@@ -85,7 +91,32 @@ MyGame.prototype.draw = function () {
 // The Update function, updates the application state. Make sure to _NOT_ draw
 // anything from this function!
 MyGame.prototype.update = function () {
+    var msg = "Brain modes [G:keys, J:immediate, K:gradual]: ";
+    var rate = 1;
+
     this.mHero.update();
     this.mMinionset.update();
-    this.mDyePack.update();
+    
+    switch(this.mMode) {
+        case 'G':
+            this.mBrain.update();   // player steers with arrow keys
+        break;
+        case 'K':
+            rate = 0.02;    // gradual rate
+            // when "K" is typed, the following should also be executed
+        case 'J':
+            this.mBrain.rotateObjPointTo(this.mHero.getXform().getPosition(), rate);
+            GameObject.prototype.update.call(this.mBrain);
+        break;
+    }
+
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.G))
+        this.mMode = 'G';
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.J))
+        this.mMode = 'J';
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.K))
+        this.mMode = 'K';
+    
+    this.mMsg.setText(msg + this.mMode);
+
 };
