@@ -11,71 +11,79 @@
 "use strict"	// Operate in Strict mode
 
 function Transform() {
-	this.mPosition = vec2.fromValues(0, 0);			// translation operator
-	this.mScale = vec2.fromValues(1, 1);			// scaling operator
-	this.mRotationInRad = 0.0;						// rotation in radians
+    this.mPosition = vec2.fromValues(0, 0);  // this is the translation
+    this.mScale = vec2.fromValues(1, 1);     // this is the width (x) and height (y)
+    this.mRotationInRad = 0.0;               // in radians!
+}
+
+// <editor-fold desc="Public Methods">
+
+//<editor-fold desc="Setter/Getter methods">
+// // <editor-fold desc="Position setters and getters ">
+Transform.prototype.setPosition = function (xPos, yPos) { this.setXPos(xPos); this.setYPos(yPos); };
+Transform.prototype.getPosition = function () { return this.mPosition; };
+Transform.prototype.getXPos = function () { return this.mPosition[0]; };
+Transform.prototype.setXPos = function (xPos) { this.mPosition[0] = xPos; };
+Transform.prototype.incXPosBy = function (delta) { this.mPosition[0] += delta; };
+Transform.prototype.getYPos = function () { return this.mPosition[1]; };
+Transform.prototype.setYPos = function (yPos) { this.mPosition[1] = yPos; };
+Transform.prototype.incYPosBy = function (delta) { this.mPosition[1] += delta; };
+//</editor-fold>
+
+// <editor-fold desc="size setters and getters">
+Transform.prototype.setSize = function (width, height) {
+    this.setWidth(width);
+    this.setHeight(height);
 };
-
-// Position setters and getters
-Transform.prototype.setPosition = function(xPos, yPos) { this.setXPos(xPos); this.setYPos(yPos); };
-Transform.prototype.setXPos = function(xPos) { this.mPosition[0] = xPos; };
-Transform.prototype.setYPos = function(yPos) { this.mPosition[1] = yPos; };
-Transform.prototype.getPosition = function() { return this.mPosition; };
-Transform.prototype.getXPos = function() { return this.mPosition[0]; };
-Transform.prototype.getYPos = function() { return this.mPosition[1]; };
-
-// Size setters and getters
-Transform.prototype.setSize = function(width, height) { this.setWidth(width); this.setHeight(height); };
-Transform.prototype.setWidth = function(width) { this.mScale[0] = width; };
-Transform.prototype.setHeight = function(height) { this.mScale[1] = height; };
-Transform.prototype.getSize = function() { return this.mScale; };
-Transform.prototype.getWidth = function() { return this.mScale[0]; };
-Transform.prototype.getHeight = function() { return this.mScale[1]; };
-
-// Rotation setters and getters
-Transform.prototype.setRotationInRad = function(rotationInRadians) {
-	this.mRotationInRad = rotationInRadians;
-	while(this.mRotationInRad > (2*Math.PI))
-		this.mRotationInRad -= (2*Math.PI);
+Transform.prototype.getSize = function () { return this.mScale; };
+Transform.prototype.incSizeBy = function (delta) {
+    this.incWidthBy(delta);
+    this.incHeightBy(delta);
 };
-Transform.prototype.getRotationInRad = function() { return this.mRotationInRad; };
+Transform.prototype.getWidth = function () { return this.mScale[0]; };
+Transform.prototype.setWidth = function (width) { this.mScale[0] = width; };
+Transform.prototype.incWidthBy = function (delta) { this.mScale[0] += delta; };
+Transform.prototype.getHeight = function () { return this.mScale[1]; };
+Transform.prototype.setHeight = function (height) { this.mScale[1] = height; };
+Transform.prototype.incHeightBy = function (delta) { this.mScale[1] += delta; };
+//</editor-fold>
 
-Transform.prototype.setRotationInDegree = function(rotationInDegree) {
-	this.setRotationInRad(rotationInDegree * Math.PI/180.0);
+// <editor-fold desc="rotation getters and setters">
+Transform.prototype.setRotationInRad = function (rotationInRadians) {
+    this.mRotationInRad = rotationInRadians;
+    while (this.mRotationInRad > (2 * Math.PI)) {
+        this.mRotationInRad -= (2 * Math.PI);
+    }
 };
-Transform.prototype.getRotationInDegree = function() { return this.mRotationInRad * 180 / Math.PI; };
-
-Transform.prototype.incXPosBy = function (delta) {
-    var newX = this.getXPos() + delta;
-    this.setXPos(newX);
+Transform.prototype.setRotationInDegree = function (rotationInDegree) {
+    this.setRotationInRad(rotationInDegree * Math.PI / 180.0);
 };
-
-Transform.prototype.incYPosBy = function (delta) {
-    var newY = this.getYPos() + delta;
-    this.setYPos(newY);
+Transform.prototype.incRotationByDegree = function (deltaDegree) {
+    this.incRotationByRad(deltaDegree * Math.PI / 180.0);
 };
-
-
-Transform.prototype.incRotationByDegree = function (degree) {
-    var newDegree = this.getRotationInDegree() + degree;
-    this.setRotationInDegree(newDegree);
+Transform.prototype.incRotationByRad = function (deltaRad) {
+    this.setRotationInRad(this.mRotationInRad + deltaRad);
 };
+Transform.prototype.getRotationInRad = function () {  return this.mRotationInRad; };
+Transform.prototype.getRotationInDegree = function () { return this.mRotationInRad * 180.0 / Math.PI; };
+    //</editor-fold>
+//</editor-fold>
+//
+// returns the matrix the concatenates the transformations defined
+Transform.prototype.getXform = function () {
+    // Creates a blank identity matrix
+    var matrix = mat4.create();
 
-Transform.prototype.incSizeby = function (delta) {
-    this.setSize((this.getWidth() + delta), (this.getHeight() + delta));
-};
+    // The matrices that WebGL uses are transposed, thus the typical matrix
+    // operations must be in reverse.
 
-Transform.prototype.getXform = function() {
-	// Creates a blank identity matrix
-	var matrix = mat4.create();
-	
-	// Step 1: compute the translation, for now z is always 0.0
-	mat4.translate(matrix, matrix, vec3.fromValues(this.getXPos(), this.getYPos(), 0.0));
-	
-	// Step 2: concatenate with rotation
-	mat4.rotateZ(matrix, matrix, this.getRotationInRad());
-	
-	// Step 3: concatenate with scaling
-	mat4.scale(matrix, matrix, vec3.fromValues(this.getWidth(), this.getHeight(), 1.0));
-	return matrix;
+    // Step A: compute translation, for now z is always at 0.0
+    mat4.translate(matrix, matrix, vec3.fromValues(this.getXPos(), this.getYPos(), 0.0));
+    // Step B: concatenate with rotation.
+    mat4.rotateZ(matrix, matrix, this.getRotationInRad());
+    // Step C: concatenate with scaling
+    mat4.scale(matrix, matrix, vec3.fromValues(this.getWidth(), this.getHeight(), 1.0));
+
+    return matrix;
 };
+//</editor-fold>
