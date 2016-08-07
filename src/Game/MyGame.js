@@ -84,6 +84,9 @@ MyGame.prototype.update = function () {
     var rate = 1;
 
     this.mHero.update();
+    // get the bounding box for collision
+    var hBbox = this.mHero.getBBox();
+    var bBbox = this.mBrain.getBBox();
 
     switch (this.mMode) {
     case 'H':
@@ -93,10 +96,15 @@ MyGame.prototype.update = function () {
         rate = 0.02;    // graduate rate
         // When "K" is typed, the following should also be executed.
     case 'J':
-        this.mBrain.rotateObjPointTo(this.mHero.getXform().getPosition(), rate);
-        GameObject.prototype.update.call(this.mBrain);  // the default GameObject: only move forward
+        if(!hBbox.intersectsBound(bBbox)) { // stop brain when touches hero
+            this.mBrain.rotateObjPointTo(this.mHero.getXform().getPosition(), rate);
+            GameObject.prototype.update.call(this.mBrain);  // the default GameObject: only move forward
+        }        
         break;
     }
+
+    // Check for hero going outside 80% of the WC Window bound
+    var status = this.mCamera.collideWCBound(this.mHero.getXform(), 0.8);
 
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.H)) {
         this.mMode = 'H';
@@ -107,5 +115,6 @@ MyGame.prototype.update = function () {
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.K)) {
         this.mMode = 'K';
     }
-    this.mMsg.setText(msg + this.mMode);
+    
+    this.mMsg.setText(msg + this.mMode + " [Hero bound=" + status + "]");
 };

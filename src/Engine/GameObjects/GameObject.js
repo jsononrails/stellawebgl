@@ -98,6 +98,12 @@ GameObject.prototype.draw = function(aCamera) {
 		this.mRenderComponent.draw(aCamera);
 };
 
+GameObject.prototype.getBBox = function() {
+	var xform = this.getXform();
+	var b = new BoundingBox(xform.getPosition(), xform.getWidth(), xform.getHeight());
+	return b;
+};
+
 GameObject.prototype.update = function() {
 	// simple default behavior
 	var pos = this.getXform().getPosition();
